@@ -1,3 +1,0 @@
-
-redraw = True
-

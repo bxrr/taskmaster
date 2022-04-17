@@ -38,6 +38,7 @@ def draw_grid():
                 txt.setFace(FONT)
                 txt.draw(win)
                 task = Entry(Point((j*1250/7) + 160, (i*144) + 110), 15)
+                task.setFill(color_rgb(240, 243, 189))
                 task.draw(win)
 
     for i in range(1,6):
