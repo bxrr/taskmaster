@@ -10,6 +10,6 @@ You may also need to pip install the following:
 - tkinter
 
 
-Download the project and run **main.py**
+Download the project zip, extract, then run **main.py**
 
-If you want to delete all your tasks, delete data in the tasks folder.
+If you want to delete all your tasks, delete 'data' in the tasks folder.
