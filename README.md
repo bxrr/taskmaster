@@ -9,6 +9,7 @@ You may also need to pip install the following:
 - pyglet
 - tkinter
 
+
 Download the project and run **main.py**
 
 If you want to delete all your tasks, delete data in the tasks folder.
