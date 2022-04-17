@@ -186,7 +186,6 @@ _root.withdraw()
 _update_lasttime = time.time()
 
 pyglet.font.add_file("font/Montserrat-Regular.ttf")
-pyglet.font.add_file("font/Comfortaa-Regular.ttf")
 
 def update(rate=None):
     global _update_lasttime

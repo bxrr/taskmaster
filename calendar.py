@@ -23,7 +23,6 @@ def incr_month():
     if display_month > 12:
         display_year += 1
         display_month %= 12
-    print(display_month)
 
     for i in range(display_day + 1, MONTH_LENGTHS[display_month-2] + 1):
         display_wday = display_wday + 1
@@ -41,8 +40,6 @@ def decr_month():
     if display_month < 1:
         display_year -= 1
         display_month = 12 - display_month
-    print(display_month)
-    
 
     for i in range(1, MONTH_LENGTHS[display_month-1] + 1 + display_day):
         display_wday = display_wday - 1
@@ -54,8 +51,7 @@ def update_cur():
     return [cur_time.tm_mday, cur_time.tm_mon, cur_time.tm_year, cur_time.tm_wday]
 
 def get_display_date():
-    print(display_wday)
-    return [display_day, MONTHS[display_month-1], display_year, WEEKDAYS[display_wday], MONTH_LENGTHS[display_month-1]]
+    return [display_day, MONTHS[display_month-1], display_year, WEEKDAYS[display_wday], MONTH_LENGTHS[display_month-1], display_month]
 
 def get_first_DOW():
     w = display_wday
@@ -68,20 +64,18 @@ def get_first_DOW():
     
 
 # task data + class
-tasks = []
 class Task:
-    def __init__(self, name, date, desc=""):
+    def __init__(self, name, date):
         self.name = name
-        self.date = date # put date in the format of 
-        self.desc = desc
+        self.date = date # put date in the format of [day, month, year] (all numbers)
 
     def update(self, new_name="", new_date=[], new_desc=""):
         self.name = new_name if new_name != "" else self.name
         self.date = new_date if new_date != [] else self.date
-        self.desc = new_desc if new_desc != "" else self.desc
     
     def get_name(self):
         return self.name
 
-    def get_desc(self):
-        return self.desc
+    def get_date(self):
+        return self.date
+
