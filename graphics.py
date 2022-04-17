@@ -161,11 +161,9 @@ __version__ = "5.0"
 #     Added Entry boxes.
 
 import time, os, sys
+import pyglet
 
-try:  # import as appropriate for 2.x vs. 3.x
-   import tkinter as tk
-except:
-   import Tkinter as tk
+import tkinter as tk
 
 
 ##########################################################################
@@ -186,6 +184,9 @@ _root = tk.Tk()
 _root.withdraw()
 
 _update_lasttime = time.time()
+
+pyglet.font.add_file("font/Montserrat-Regular.ttf")
+pyglet.font.add_file("font/Comfortaa-Regular.ttf")
 
 def update(rate=None):
     global _update_lasttime
@@ -212,6 +213,9 @@ class GraphWin(tk.Canvas):
         assert type(title) == type(""), "Title must be a string"
         master = tk.Toplevel(_root)
         master.protocol("WM_DELETE_WINDOW", self.close)
+        logo = tk.PhotoImage(file="img/logo.png")
+        master.iconphoto(False, logo)
+
         tk.Canvas.__init__(self, master, width=width, height=height,
                            highlightthickness=0, bd=0)
         self.master.title(title)
@@ -397,7 +401,10 @@ class GraphWin(tk.Canvas):
             item.undraw()
             item.draw(self)
         self.update()
-        
+
+    def undraw(self):
+        for item in self.items[:]:
+            item.undraw()
                       
 class Transform:
 
@@ -756,11 +763,8 @@ class Text(GraphicsObject):
         return self.anchor.clone()
 
     def setFace(self, face):
-        if face in ['helvetica','arial','courier','times roman']:
-            f,s,b = self.config['font']
-            self._reconfig("font",(face,s,b))
-        else:
-            raise GraphicsError(BAD_OPTION)
+        f,s,b = self.config['font']
+        self._reconfig("font",(face,s,b))
 
     def setSize(self, size):
         if 5 <= size <= 36:
@@ -960,56 +964,3 @@ def color_rgb(r,g,b):
     """r,g,b are intensities of red, green, and blue in range(256)
     Returns color specifier string for the resulting color"""
     return "#%02x%02x%02x" % (r,g,b)
-
-def test():
-    win = GraphWin()
-    win.setCoords(0,0,10,10)
-    t = Text(Point(5,5), "Centered Text")
-    t.draw(win)
-    p = Polygon(Point(1,1), Point(5,3), Point(2,7))
-    p.draw(win)
-    e = Entry(Point(5,6), 10)
-    e.draw(win)
-    win.getMouse()
-    p.setFill("red")
-    p.setOutline("blue")
-    p.setWidth(2)
-    s = ""
-    for pt in p.getPoints():
-        s = s + "(%0.1f,%0.1f) " % (pt.getX(), pt.getY())
-    t.setText(e.getText())
-    e.setFill("green")
-    e.setText("Spam!")
-    e.move(2,0)
-    win.getMouse()
-    p.move(2,3)
-    s = ""
-    for pt in p.getPoints():
-        s = s + "(%0.1f,%0.1f) " % (pt.getX(), pt.getY())
-    t.setText(s)
-    win.getMouse()
-    p.undraw()
-    e.undraw()
-    t.setStyle("bold")
-    win.getMouse()
-    t.setStyle("normal")
-    win.getMouse()
-    t.setStyle("italic")
-    win.getMouse()
-    t.setStyle("bold italic")
-    win.getMouse()
-    t.setSize(14)
-    win.getMouse()
-    t.setFace("arial")
-    t.setSize(20)
-    win.getMouse()
-    win.close()
-
-#MacOS fix 2
-#tk.Toplevel(_root).destroy()
-
-# MacOS fix 1
-update()
-
-if __name__ == "__main__":
-    test()
